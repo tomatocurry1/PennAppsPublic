@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_overlay"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/bigCode"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="123456"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="48sp"
+                    android:textStyle="bold|italic" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Share this code with your friends"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/startGame"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Start Game"
+                android:textSize="24sp" />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/playerList"
+            android:layout_width="match_parent"
+            android:layout_height="471dp" >
+        </ListView>
+
+    </LinearLayout>
+
+</RelativeLayout>
