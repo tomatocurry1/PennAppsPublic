@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_overlay"
+    android:gravity="center|center_vertical"
+    android:orientation="vertical"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black_overlay"
+        android:gravity="center"
+        android:text="Join a Game"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="48sp" />
+
+    <EditText
+        android:id="@+id/codeNickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Code"
+        android:textSize="72sp" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/nicknameField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Nickname" />
+
+    <Button
+        android:id="@+id/joinButton"
+        android:onClick="joinButtonClick"
+        android:layout_width="match_parent"
+        android:layout_height="228dp"
+        android:text="Join"
+        android:textSize="96sp" />
+
+</LinearLayout>

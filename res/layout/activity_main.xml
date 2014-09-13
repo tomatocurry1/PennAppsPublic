@@ -2,16 +2,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_overlay"
-    tools:context="com.example.pennapps.MainActivity" >
+    tools:context="com.jonathon_vogel.pennapps.MainActivity" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/black_overlay"
         android:orientation="vertical" >
 
         <Button
             android:id="@+id/createGame"
+            android:onClick="createGameClick"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -20,6 +21,7 @@
 
         <Button
             android:id="@+id/joinGame"
+            android:onClick="joinGameClick"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

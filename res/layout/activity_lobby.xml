@@ -1,0 +1,24 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_overlay"
+    android:orientation="vertical"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black_overlay"
+        android:text="Lobby"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="48sp" />
+
+    <ListView
+        android:id="@+id/playerList"
+        android:layout_width="match_parent"
+        android:layout_height="471dp" >
+    </ListView>
+
+</LinearLayout>

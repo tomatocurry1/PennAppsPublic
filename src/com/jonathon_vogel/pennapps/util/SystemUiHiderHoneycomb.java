@@ -1,4 +1,4 @@
-package com.example.pennapps.util;
+package com.jonathon_vogel.pennapps.util;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

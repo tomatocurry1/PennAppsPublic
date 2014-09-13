@@ -11,11 +11,22 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:gravity="center|top"
         android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black_overlay"
+            android:text="Create Game"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="48sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:background="@color/black_overlay" >
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -35,7 +46,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Share this code with your friends"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#ffffff" />
 
             </LinearLayout>
 
@@ -43,8 +55,9 @@
                 android:id="@+id/startGame"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
+                android:layout_margin="10dp"
                 android:text="Start Game"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
         </LinearLayout>
 

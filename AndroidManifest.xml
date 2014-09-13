@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name="com.jonathon_vogel.pennapps.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:theme="@style/FullscreenTheme" >
@@ -25,8 +25,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CreateGameActivity"
-            android:label="@string/title_activity_create_game" >
+            android:name="com.jonathon_vogel.pennapps.CreateGameActivity"
+            android:label="@string/title_activity_create_game"
+            android:parentActivityName="com.jonathon_vogel.pennapps.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jonathon_vogel.pennapps.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.jonathon_vogel.pennapps.JoinGameActivity"
+            android:label="@string/title_activity_join_game" >
+        </activity>
+        <activity
+            android:name="com.jonathon_vogel.pennapps.LobbyActivity"
+            android:label="@string/title_activity_lobby" >
         </activity>
     </application>
 
