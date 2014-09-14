@@ -28,7 +28,6 @@ public class PlayerInfo {
 		this.nickname = nickname;
 		this.hunter = hunter;
 		this.ready = ready;
-		this.isSelf = regID.equals(MainActivity.gcmRegistrationId);
 	}
 
 	public boolean isHunter() {

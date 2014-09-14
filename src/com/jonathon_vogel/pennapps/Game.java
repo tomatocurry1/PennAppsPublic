@@ -26,6 +26,7 @@ public class Game {
 	
 	public PlayerInfo makeSelfPlayer(String nick){
 		self = new PlayerInfo(MainActivity.gcmRegistrationId, nick, false, false);
+		self.isSelf = true;
 		players.add(self);
 		return self;
 	}

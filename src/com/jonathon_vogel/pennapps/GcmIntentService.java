@@ -16,13 +16,13 @@ public class GcmIntentService extends IntentService {
 	public GcmIntentService() {
 		super("GcmIntentService");
 	}
-	
+
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		final Bundle extras = intent.getExtras();
 		GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
 		String messageType = gcm.getMessageType(intent);
-		
+
 		Log.d("gcm", "Got GCM message: " + messageType + ", " + extras.toString());
 		if (!extras.isEmpty()) {
 			if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
@@ -49,12 +49,17 @@ public class GcmIntentService extends IntentService {
 				} else {
 					Log.w("gcm", "Got unknown event type " + type + "!");
 				}
-				
-				if (adapter != null)
-					adapter.notifyDataSetChanged();
+
+				MainActivity.handler.post(new Runnable() {
+					@Override
+					public void run() {
+						if (adapter != null)
+							adapter.notifyDataSetChanged();
+					}
+				});
 			}
 		}
-		
+
 		GcmBroadcastReceiver.completeWakefulIntent(intent);
 	}
 }

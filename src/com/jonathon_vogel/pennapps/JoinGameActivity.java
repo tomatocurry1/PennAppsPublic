@@ -10,6 +10,9 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -57,10 +60,19 @@ public class JoinGameActivity extends HHActivity {
 						}
 						Toast.makeText(JoinGameActivity.this, msg, Toast.LENGTH_LONG).show();
 					} else {
+						Game.getInstance().makeSelfPlayer(nickname.getText().toString());
+						String json = IOUtils.toString(resp.getEntity().getContent());
+						JSONObject jobj = new JSONObject(json);
+						JSONArray players = jobj.getJSONArray("players");
+						for (int i = 0; i < players.length(); i++) {
+							JSONObject player = players.getJSONObject(i);
+							Game.getInstance().players.add(new PlayerInfo(player.getString("reg_id"), player.getString("nickname"),
+									player.getBoolean("hunter"), player.getBoolean("ready")));
+						}
+
 						MainActivity.handler.post(new Runnable() {
 							@Override
 							public void run() {
-								Game.getInstance().makeSelfPlayer(nickname.getText().toString());
 								Intent intent = new Intent(JoinGameActivity.this, LobbyActivity.class);
 								startActivity(intent);
 							}
@@ -73,6 +85,8 @@ public class JoinGameActivity extends HHActivity {
 							Toast.makeText(JoinGameActivity.this, "Couldn't reach server :(", Toast.LENGTH_LONG).show();
 						}
 					});
+				} catch (JSONException e) {
+					e.printStackTrace();
 				}
 				return null;
 			}

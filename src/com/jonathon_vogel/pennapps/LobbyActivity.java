@@ -26,7 +26,7 @@ public class LobbyActivity extends HHActivity {
 
 				View view = super.getView(position, convertView, parent);
 				TextView name = (TextView) view.findViewById(android.R.id.text1);
-				TextView status = (TextView) view.findViewById(android.R.id.text2);
+				final TextView status = (TextView) view.findViewById(android.R.id.text2);
 
 				name.setText(player.nickname);
 				if (player.isSelf) {
@@ -34,8 +34,10 @@ public class LobbyActivity extends HHActivity {
 					view.setOnClickListener(new OnClickListener(){
 						@Override
 						public void onClick(View v){
-							if (player.isReady())
+							if (!player.isReady()){
 								player.markReadyToServer(v);
+								status.setText("ready");
+							}							
 						}
 					});
 				} else {

@@ -37,7 +37,7 @@
             android:value="@integer/google_play_services_version" />
 
         <receiver
-            android:name=".GcmBroadcastReceiver"
+            android:name="com.jonathon_vogel.pennapps.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -46,7 +46,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".GcmIntentService" />
+        <service android:name="com.jonathon_vogel.pennapps.GcmIntentService" />
 
         <activity
             android:name="com.jonathon_vogel.pennapps.MainActivity"
@@ -90,11 +90,11 @@
         </activity>
 
         <service
-            android:name=".VibrateService"
+            android:name="com.jonathon_vogel.pennapps.VibrateService"
             android:enabled="true" />
 
         <activity
-            android:name=".CountdownActivity"
+            android:name="com.jonathon_vogel.pennapps.CountdownActivity"
             android:label="@string/title_activity_countdown" >
         </activity>
         <activity
