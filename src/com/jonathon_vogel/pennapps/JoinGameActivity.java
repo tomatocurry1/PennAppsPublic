@@ -43,9 +43,10 @@ public class JoinGameActivity extends HHActivity {
 		final EditText nickname = (EditText) findViewById(R.id.nickname);
 		Game.getInstance().gameID = gameCode.getText().toString();
 		new AsyncTask<Void, Void, Void>() {
+			String serverError;
+
 			@Override
 			protected Void doInBackground(Void... params) {
-				Looper.prepare();
 				try {
 					AndroidHttpClient http = AndroidHttpClient.newInstance("Hide and Hunt App");
 					List<NameValuePair> queries = new ArrayList<NameValuePair>(2);
@@ -58,7 +59,7 @@ public class JoinGameActivity extends HHActivity {
 						if (resp.getEntity() != null) {
 							msg = IOUtils.toString(resp.getEntity().getContent());
 						}
-						Toast.makeText(JoinGameActivity.this, msg, Toast.LENGTH_LONG).show();
+						serverError = msg;
 					} else {
 						Game.getInstance().makeSelfPlayer(nickname.getText().toString());
 						String json = IOUtils.toString(resp.getEntity().getContent());
@@ -69,27 +70,23 @@ public class JoinGameActivity extends HHActivity {
 							Game.getInstance().players.add(new PlayerInfo(player.getString("reg_id"), player.getString("nickname"),
 									player.getBoolean("hunter"), player.getBoolean("ready")));
 						}
-
-						MainActivity.handler.post(new Runnable() {
-							@Override
-							public void run() {
-								Intent intent = new Intent(JoinGameActivity.this, LobbyActivity.class);
-								startActivity(intent);
-							}
-						});
 					}
 				} catch (IOException e) {
-					MainActivity.handler.post(new Runnable() {
-						@Override
-						public void run() {
-							Toast.makeText(JoinGameActivity.this, "Couldn't reach server :(", Toast.LENGTH_LONG).show();
-						}
-					});
 				} catch (JSONException e) {
-					e.printStackTrace();
 				}
 				return null;
+
 			}
+
+			protected void onPostExecute(Void result) {
+				if (serverError != null) {
+					Toast.makeText(JoinGameActivity.this, serverError, Toast.LENGTH_LONG).show();
+				} else {
+					Intent intent = new Intent(JoinGameActivity.this, LobbyActivity.class);
+					startActivity(intent);
+				}
+
+			};
 		}.execute();
 	}
 

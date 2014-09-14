@@ -21,7 +21,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
@@ -30,12 +29,17 @@ import android.widget.Toast;
 import com.example.pennapps.R;
 
 public class EndGameActivity extends Activity {
-
+	ArrayAdapter<JSONObject> adapter;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_end_game);
+		stopService(InGameActivity.vibrateIntent);
+		stopService(InGameActivity.gpsIntent);
 		new AsyncTask<Void, Void, Void>() {
+			List<JSONObject> tagsList;
+			
 			@Override
 			protected Void doInBackground(Void... params) {
 				try {
@@ -55,35 +59,10 @@ public class EndGameActivity extends Activity {
 							throw new IOException("Got error from the server :( " + content);
 						}
 						JSONArray tags = jobj.getJSONArray("tags");
-						final List<JSONObject> tagList = new ArrayList<JSONObject>(tags.length());
+						tagsList = new ArrayList<JSONObject>(tags.length());
 						for (int i = 0; i < tags.length(); i++) {
-							tagList.add(tags.getJSONObject(i));
-						}
-						
-						MainActivity.handler.post(new Runnable() {
-							@Override
-							public void run() {
-								ArrayAdapter<JSONObject> adapter = new ArrayAdapter<JSONObject>(EndGameActivity.this, android.R.layout.simple_list_item_2, android.R.id.text1, tagList) {
-									@Override
-									public View getView(int position, View convertView, ViewGroup parent) {
-										final JSONObject tag = tagList.get(position);
-
-										View view = super.getView(position, convertView, parent);
-										TextView hunter = (TextView) view.findViewById(android.R.id.text1);
-										TextView hider = (TextView) view.findViewById(android.R.id.text2);
-
-										try {
-											hunter.setText(tag.getString("hunter") + " took out");
-											hider.setText(tag.getString("hider"));
-										} catch (JSONException e) {
-											e.printStackTrace();
-										}
-										
-										return view;										
-									}
-								};
-							}
-						});						
+							tagsList.add(tags.getJSONObject(i));
+						}					
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -104,6 +83,28 @@ public class EndGameActivity extends Activity {
 				}
 				return null;
 			}
+			
+			protected void onPostExecute(Void result) {
+				adapter = new ArrayAdapter<JSONObject>(EndGameActivity.this, android.R.layout.simple_list_item_2, android.R.id.text1, tagsList) {
+					@Override
+					public View getView(int position, View convertView, ViewGroup parent) {
+						final JSONObject tag = tagsList.get(position);
+
+						View view = super.getView(position, convertView, parent);
+						TextView hunter = (TextView) view.findViewById(android.R.id.text1);
+						TextView hider = (TextView) view.findViewById(android.R.id.text2);
+
+						try {
+							hunter.setText(tag.getString("hunter") + " took out");
+							hider.setText(tag.getString("hider"));
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+						
+						return view;										
+					}
+				};
+			};
 		}.execute();
 	}
 

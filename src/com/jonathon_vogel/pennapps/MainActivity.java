@@ -93,6 +93,9 @@ public class MainActivity extends HHActivity {
 
 	public void createGameClick(View v) {
 		new AsyncTask<Void, Void, Void>() {
+			IOException exc;
+			JSONObject serverData;
+			
 			@Override
 			protected Void doInBackground(Void... params) {
 				try {
@@ -101,40 +104,32 @@ public class MainActivity extends HHActivity {
 					queries.add(new BasicNameValuePair("reg_id", gcmRegistrationId));
 					HttpPost req = new HttpPost(SERVER + "/create" + "?" + URLEncodedUtils.format(queries, "UTF-8"));
 					HttpResponse resp = http.execute(req);
-					
 					if (resp.getStatusLine().getStatusCode() != 200 || resp.getEntity() == null) {
 						throw new IOException("HTTP error! " + resp.getStatusLine().getStatusCode());
-					} else {
-						String content = IOUtils.toString(resp.getEntity().getContent());
-						Log.d("json", content);
-						JSONObject jobj = new JSONObject(content);
-						if (jobj.getString("status").equals("error")) {
-							throw new IOException("Got error from the server :( " + content);
-						}
-						Intent intent = new Intent(MainActivity.this, CreateGameActivity.class);
-						intent.putExtra("game_id", jobj.getString("game_id"));
-						intent.putExtra("nickname", jobj.getString("nickname"));
-						startActivity(intent);
 					}
+					String content = IOUtils.toString(resp.getEntity().getContent());
+					serverData = new JSONObject(content);
 				} catch (IOException e) {
-					e.printStackTrace();
-					handler.post(new Runnable() {
-						@Override
-						public void run() {
-							Toast.makeText(MainActivity.this, "Couldn't reach server :(", Toast.LENGTH_LONG).show();
-						}
-					});
+					exc = e;
+				} catch (JSONException e) {}
+				return null;
+			}
+			
+			protected void onPostExecute(Void result) {
+				try {
+					if (serverData != null && serverData.getString("status").equals("success")) {
+						Intent intent = new Intent(MainActivity.this, CreateGameActivity.class);
+						intent.putExtra("game_id", serverData.getString("game_id"));
+						intent.putExtra("nickname", serverData.getString("nickname"));
+						startActivity(intent);
+					} else {
+						Toast.makeText(MainActivity.this, "Couldn't reach server :( " + exc.getMessage(), Toast.LENGTH_LONG).show();
+					}
 				} catch (JSONException e) {
 					e.printStackTrace();
-					handler.post(new Runnable() {
-						@Override
-						public void run() {
-							Toast.makeText(MainActivity.this, "JSON was malformed", Toast.LENGTH_LONG).show();
-						}
-					});
+					Toast.makeText(MainActivity.this, "Crazy JSON over here tho", Toast.LENGTH_LONG).show();
 				}
-				return (Void) null;
-			}
+			};
 		}.execute();
 	}
 
@@ -183,20 +178,18 @@ public class MainActivity extends HHActivity {
 					editor.putString(PROPERTY_REG_ID, gcmRegistrationId);
 					editor.putInt(PROPERTY_APP_VERSION, APP_VERSION);
 					editor.commit();
-					handler.post(new Runnable() {
-						@Override
-						public void run() {
-							Button create = (Button) findViewById(R.id.createGame);
-							Button join = (Button) findViewById(R.id.joinGame);
-							create.setEnabled(true);
-							join.setEnabled(true);
-						}
-					});
 				} catch (IOException e) {
 					finish();
 				}
-				return (Void) null;
+				return null;
 			}
+			
+			protected void onPostExecute(Void result) {
+				Button create = (Button) findViewById(R.id.createGame);
+				Button join = (Button) findViewById(R.id.joinGame);
+				create.setEnabled(true);
+				join.setEnabled(true);
+			};
 		}.execute();
 	}
 }

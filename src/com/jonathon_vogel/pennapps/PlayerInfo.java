@@ -48,6 +48,8 @@ public class PlayerInfo {
 
 	public void markReadyToServer(final View v) {
 		new AsyncTask<Void, Void, Void>() {
+			boolean failure;
+			
 			@Override
 			protected Void doInBackground(Void... params) {
 				try {
@@ -58,22 +60,22 @@ public class PlayerInfo {
 					HttpResponse resp = http.execute(req);
 
 					if (resp.getStatusLine().getStatusCode() != 200) {
-						throw new IOException("HTTP error");
-					} else {
-						v.setOnClickListener(null);
-						setReady(true);
+						failure = true;
 					}
 				} catch (IOException e) {
-					e.printStackTrace();
-					MainActivity.handler.post(new Runnable() {
-						@Override
-						public void run() {
-							Toast.makeText(MainActivity.handler.context, "Couldn't reach server :(", Toast.LENGTH_LONG).show();
-						}
-					});
+					failure = true;
 				}
 				return null;
 			}
+			
+			protected void onPostExecute(Void result) {
+				if (failure) {
+					Toast.makeText(MainActivity.handler.context, "Couldn't reach server :(", Toast.LENGTH_LONG).show();
+				} else {
+					v.setOnClickListener(null);
+					setReady(true);
+				}
+			};
 		}.execute();
 	}
 

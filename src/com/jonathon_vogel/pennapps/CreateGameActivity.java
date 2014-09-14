@@ -62,47 +62,51 @@ public class CreateGameActivity extends HHActivity {
 				name.setText(player.nickname);
 				if (player.isSelf) {
 					status.setText("You're the boss and always ready");
-				} else{
+				} else {
 					if (player.ready) {
 						status.setText("Ready! (Tap to kick)");
 					} else {
 						status.setText("Not ready... (Tap to kick)");
 					}
-					
-					view.setOnClickListener(new OnClickListener(){
+
+					view.setOnClickListener(new OnClickListener() {
 
 						@Override
 						public void onClick(View v) {
 							new AsyncTask<Void, Void, Void>() {
+								IOException exc;
+
 								@Override
 								protected Void doInBackground(Void... params) {
 									try {
 										AndroidHttpClient http = AndroidHttpClient.newInstance("Hide and Hunt App");
 										List<NameValuePair> queries = new ArrayList<NameValuePair>(1);
 										queries.add(new BasicNameValuePair("reg_id", MainActivity.gcmRegistrationId));
-										HttpPost req = new HttpPost(MainActivity.SERVER + "/ready/" + Game.getInstance().gameID + "/"+player.regID+"?" + URLEncodedUtils.format(queries, "UTF-8"));
+										HttpPost req = new HttpPost(MainActivity.SERVER + "/ready/" + Game.getInstance().gameID + "/" + player.regID + "?"
+												+ URLEncodedUtils.format(queries, "UTF-8"));
 										HttpResponse resp = http.execute(req);
 
 										if (resp.getStatusLine().getStatusCode() != 200) {
 											throw new IOException("HTTP error");
-										} 
+										}
 									} catch (IOException e) {
-										e.printStackTrace();
-										MainActivity.handler.post(new Runnable() {
-											@Override
-											public void run() {
-												Toast.makeText(MainActivity.handler.context, "Couldn't reach server :(", Toast.LENGTH_LONG).show();
-											}
-										});
+										exc = e;
 									}
 									return null;
 								}
+
+								protected void onPostExecute(Void result) {
+									if (exc != null) {
+										exc.printStackTrace();
+										Toast.makeText(MainActivity.handler.context, "Couldn't reach server :(", Toast.LENGTH_LONG).show();
+
+									}
+								};
 							}.execute();
 						}
-						
+
 					});
-				} 
-					
+				}
 
 				return view;
 			}
@@ -116,24 +120,31 @@ public class CreateGameActivity extends HHActivity {
 
 	public void startGame(View v) {
 		new AsyncTask<Void, Void, Void>() {
+			boolean failure;
+			
 			@Override
 			protected Void doInBackground(Void... params) {
-				Looper.prepare();
 				try {
 					AndroidHttpClient http = AndroidHttpClient.newInstance("Hide and Hunt App");
 					List<NameValuePair> queries = new ArrayList<NameValuePair>(1);
 					queries.add(new BasicNameValuePair("reg_id", MainActivity.gcmRegistrationId));
 					HttpPost req = new HttpPost(MainActivity.SERVER + "/start/" + Game.getInstance().gameID + "?" + URLEncodedUtils.format(queries, "UTF-8"));
 					HttpResponse resp = http.execute(req);
-					
+
 					if (resp.getStatusLine().getStatusCode() != 200) {
-						Toast.makeText(CreateGameActivity.this, "Couldn't start game! :(", Toast.LENGTH_LONG).show();
+						failure = true;
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 				return null;
 			}
+			
+			protected void onPostExecute(Void result) {
+				if (failure) {
+					Toast.makeText(CreateGameActivity.this, "Couldn't start game! :(", Toast.LENGTH_LONG).show();
+				}
+			};
 		}.execute();
 	}
 }

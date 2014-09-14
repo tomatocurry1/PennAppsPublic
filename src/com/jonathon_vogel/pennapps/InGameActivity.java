@@ -35,8 +35,8 @@ public class InGameActivity extends HHActivity implements CreateNdefMessageCallb
 	Button special;
 	private NfcAdapter nfcAdapter;
 
-	Intent vibrateIntent;
-	Intent gpsIntent;
+	static Intent vibrateIntent;
+	static Intent gpsIntent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +101,8 @@ public class InGameActivity extends HHActivity implements CreateNdefMessageCallb
 													// the AAR, if present
 		final String otherID = new String(msg.getRecords()[0].getPayload());
 		new AsyncTask<Void, Void, Void>() {
+			IOException exc;
+		
 			@Override
 			protected Void doInBackground(Void... params) {
 				try {
@@ -115,16 +117,17 @@ public class InGameActivity extends HHActivity implements CreateNdefMessageCallb
 						throw new IOException("HTTP error");
 					}
 				} catch (IOException e) {
-					e.printStackTrace();
-					MainActivity.handler.post(new Runnable() {
-						@Override
-						public void run() {
-							Toast.makeText(MainActivity.handler.context, "Couldn't reach server :(", Toast.LENGTH_LONG).show();
-						}
-					});
+					exc = e;
 				}
 				return null;
 			}
+			
+			protected void onPostExecute(Void result) {
+				if (exc != null) {
+					exc.printStackTrace();
+					Toast.makeText(MainActivity.handler.context, "Couldn't reach server :(", Toast.LENGTH_LONG).show();
+				}
+			};
 		}.execute();
 	}
 
