@@ -1,8 +1,5 @@
 package com.jonathon_vogel.pennapps;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +11,6 @@ import android.widget.TextView;
 import com.example.pennapps.R;
 
 public class LobbyActivity extends Activity {
-	private List<PlayerInfo> players;
 	private ArrayAdapter<PlayerInfo> adapter;
 
 	@Override
@@ -23,12 +19,10 @@ public class LobbyActivity extends Activity {
 		getActionBar().hide();
 		setContentView(R.layout.activity_lobby);
 		
-		players = new ArrayList<PlayerInfo>();
-		
-		adapter = new ArrayAdapter<PlayerInfo>(this, android.R.layout.simple_list_item_2, android.R.id.text1, players) {
+		adapter = new ArrayAdapter<PlayerInfo>(this, android.R.layout.simple_list_item_2, android.R.id.text1, Game.getInstance().players) {
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
-				PlayerInfo player = players.get(position);
+				PlayerInfo player = Game.getInstance().players.get(position);
 				
 				View view = super.getView(position, convertView, parent);
 				TextView name = (TextView) view.findViewById(android.R.id.text1);

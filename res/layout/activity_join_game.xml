@@ -31,7 +31,7 @@
         android:paddingBottom="5dp" >
 
         <EditText
-            android:id="@+id/codeNickname"
+            android:id="@+id/gameCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -41,7 +41,7 @@
             android:textSize="72sp" />
 
         <EditText
-            android:id="@+id/nicknameField"
+            android:id="@+id/nickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"

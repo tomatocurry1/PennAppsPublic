@@ -97,6 +97,10 @@
             android:name=".CountdownActivity"
             android:label="@string/title_activity_countdown" >
         </activity>
+        <activity
+            android:name="com.jonathon_vogel.pennapps.InGameActivity"
+            android:label="@string/title_activity_in_game" >
+        </activity>
     </application>
 
 </manifest>

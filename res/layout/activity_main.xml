@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.54"
             android:gravity="center"
-            android:text="PennApps"
+            android:text="Hide and Hunt"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="60sp"
             android:typeface="normal" />

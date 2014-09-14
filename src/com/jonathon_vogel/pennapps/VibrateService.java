@@ -14,17 +14,16 @@ public class VibrateService extends Service {
 	private boolean threadShouldRun = true;
 	private final LocalBinder binder = new LocalBinder();
 	private static VibrateService staticInstance;
-	
-	
-	public VibrateService(){
+
+	public VibrateService() {
 		super();
-		staticInstance=this;
+		staticInstance = this;
 	}
-	
-	public static VibrateService getStatic(){
+
+	public static VibrateService getStatic() {
 		return staticInstance;
 	}
-	
+
 	public class VibrateThread extends Thread {
 		Vibrator vibrator;
 
@@ -38,7 +37,7 @@ public class VibrateService extends Service {
 				double dist = binder.getDistance();
 				if (dist == 0)
 					dist = 1.0;
-					
+
 				if (dist <= MAXDIST) {
 					vibrator.vibrate(500);
 					VibrateService.sleep((long) (MAXPAUSE * dist / MAXDIST));
@@ -49,8 +48,6 @@ public class VibrateService extends Service {
 		}
 
 	}
-
-
 
 	private static void sleep(long time) {
 		try {
@@ -63,7 +60,7 @@ public class VibrateService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		thread = new VibrateThread();
-		
+
 	}
 
 	@Override

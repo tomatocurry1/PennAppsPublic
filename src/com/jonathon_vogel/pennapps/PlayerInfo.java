@@ -1,27 +1,27 @@
 package com.jonathon_vogel.pennapps;
 
 public class PlayerInfo {
+	String regID;
 	String nickname;
+	boolean hunter;
 	boolean ready;
 	boolean isSelf;
 	
-	public PlayerInfo(String nickname, boolean ready, boolean isSelf) {
+	public PlayerInfo(String regID, String nickname, boolean hunter, boolean ready) {
 		super();
+		this.regID = regID;
 		this.nickname = nickname;
+		this.hunter = hunter;
 		this.ready = ready;
-		this.isSelf = isSelf;
-	}
-	
-	public PlayerInfo(String nickname, boolean ready) {
-		this(nickname, ready, false);
+		this.isSelf = regID.equals(MainActivity.gcmRegistrationId);
 	}
 
-	public String getNickname() {
-		return nickname;
+	public boolean isHunter() {
+		return hunter;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setHunter(boolean hunter) {
+		this.hunter = hunter;
 	}
 
 	public boolean isReady() {
@@ -32,22 +32,27 @@ public class PlayerInfo {
 		this.ready = ready;
 	}
 
-	public boolean isSelf() {
-		return isSelf;
+	public String getRegID() {
+		return regID;
 	}
 
-	public void setSelf(boolean isSelf) {
-		this.isSelf = isSelf;
+	public String getNickname() {
+		return nickname;
+	}
+
+	public boolean isSelf() {
+		return isSelf;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + (hunter ? 1231 : 1237);
 		result = prime * result + (isSelf ? 1231 : 1237);
-		result = prime * result
-				+ ((nickname == null) ? 0 : nickname.hashCode());
+		result = prime * result + ((nickname == null) ? 0 : nickname.hashCode());
 		result = prime * result + (ready ? 1231 : 1237);
+		result = prime * result + ((regID == null) ? 0 : regID.hashCode());
 		return result;
 	}
 
@@ -60,6 +65,8 @@ public class PlayerInfo {
 		if (getClass() != obj.getClass())
 			return false;
 		PlayerInfo other = (PlayerInfo) obj;
+		if (hunter != other.hunter)
+			return false;
 		if (isSelf != other.isSelf)
 			return false;
 		if (nickname == null) {
@@ -69,12 +76,16 @@ public class PlayerInfo {
 			return false;
 		if (ready != other.ready)
 			return false;
+		if (regID == null) {
+			if (other.regID != null)
+				return false;
+		} else if (!regID.equals(other.regID))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "PlayerInfo [nickname=" + nickname + ", ready=" + ready
-				+ ", isSelf=" + isSelf + "]";
+		return "PlayerInfo [regID=" + regID + ", nickname=" + nickname + ", hunter=" + hunter + ", ready=" + ready + ", isSelf=" + isSelf + "]";
 	}
 }
