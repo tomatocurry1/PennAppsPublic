@@ -1,5 +1,6 @@
 package com.jonathon_vogel.pennapps;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,10 +8,8 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +18,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -90,12 +90,12 @@ public class MainActivity extends HHActivity {
 			@Override
 			protected Void doInBackground(Void... params) {
 				try {
-					HttpClient http = HttpClients.createDefault();
-					HttpPost req = new HttpPost(SERVER + "/create");
+					AndroidHttpClient http = AndroidHttpClient.newInstance("Hide and Hunt App");
 					List<NameValuePair> queries = new ArrayList<NameValuePair>(1);
 					queries.add(new BasicNameValuePair("reg_id", gcmRegistrationId));
-					req.setEntity(new UrlEncodedFormEntity(queries));
+					HttpPost req = new HttpPost(SERVER + "/create" + "?" + URLEncodedUtils.format(queries, "UTF-8"));
 					HttpResponse resp = http.execute(req);
+					
 					if (resp.getStatusLine().getStatusCode() != 200 || resp.getEntity() == null) {
 						throw new IOException("HTTP error! " + resp.getStatusLine().getStatusCode());
 					} else {
@@ -111,6 +111,7 @@ public class MainActivity extends HHActivity {
 						startActivity(intent);
 					}
 				} catch (IOException e) {
+					e.printStackTrace();
 					handler.post(new Runnable() {
 						@Override
 						public void run() {
@@ -118,6 +119,7 @@ public class MainActivity extends HHActivity {
 						}
 					});
 				} catch (JSONException e) {
+					e.printStackTrace();
 					handler.post(new Runnable() {
 						@Override
 						public void run() {
@@ -127,7 +129,7 @@ public class MainActivity extends HHActivity {
 				}
 				return (Void) null;
 			}
-		};
+		}.execute();
 	}
 
 	public void joinGameClick(View v) {

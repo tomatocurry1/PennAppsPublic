@@ -7,16 +7,16 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -42,13 +42,13 @@ public class JoinGameActivity extends HHActivity {
 		new AsyncTask<Void, Void, Void>() {
 			@Override
 			protected Void doInBackground(Void... params) {
+				Looper.prepare();
 				try {
-					HttpClient http = HttpClients.createDefault();
-					HttpPost req = new HttpPost(SERVER + "/join/" + gameCode.getText().toString());
-					List<NameValuePair> queries = new ArrayList<NameValuePair>(1);
+					AndroidHttpClient http = AndroidHttpClient.newInstance("Hide and Hunt App");
+					List<NameValuePair> queries = new ArrayList<NameValuePair>(2);
 					queries.add(new BasicNameValuePair("reg_id", MainActivity.gcmRegistrationId));
 					queries.add(new BasicNameValuePair("nickname", nickname.getText().toString()));
-					req.setEntity(new UrlEncodedFormEntity(queries));
+					HttpPost req = new HttpPost(SERVER + "/join/" + gameCode.getText().toString() + "?" + URLEncodedUtils.format(queries, "UTF-8"));
 					HttpResponse resp = http.execute(req);
 					if (resp.getStatusLine().getStatusCode() != 200) {
 						String msg = "Server error occurred (" + resp.getStatusLine().getStatusCode() + ")";
