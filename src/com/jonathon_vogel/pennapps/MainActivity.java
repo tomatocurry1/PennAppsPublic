@@ -12,7 +12,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,7 +28,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-public class MainActivity extends Activity {
+public class MainActivity extends HHActivity {
 	static final String PROPERTY_REG_ID = "registration_id";
 	static final String PROPERTY_APP_VERSION = "app_version";
 	static final int APP_VERSION = 0;

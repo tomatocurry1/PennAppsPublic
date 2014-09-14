@@ -13,7 +13,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
@@ -24,7 +23,7 @@ import android.widget.Toast;
 
 import com.example.pennapps.R;
 
-public class JoinGameActivity extends Activity {
+public class JoinGameActivity extends HHActivity {
 	public static final String SERVER = "http://66.228.36.36:44207";
 
 	@Override

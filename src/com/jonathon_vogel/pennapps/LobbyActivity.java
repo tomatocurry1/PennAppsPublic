@@ -1,6 +1,5 @@
 package com.jonathon_vogel.pennapps;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,7 @@ import android.widget.TextView;
 
 import com.example.pennapps.R;
 
-public class LobbyActivity extends Activity {
+public class LobbyActivity extends HHActivity {
 	private ArrayAdapter<PlayerInfo> adapter;
 
 	@Override
@@ -37,6 +36,9 @@ public class LobbyActivity extends Activity {
 				return view;
 			}
 		};
+		
+		super.setAdapter(adapter);
+		
         ListView playerList = (ListView) findViewById(R.id.playerList);
         playerList.setAdapter(adapter);
 	}

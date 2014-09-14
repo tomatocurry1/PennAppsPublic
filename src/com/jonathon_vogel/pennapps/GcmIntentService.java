@@ -4,10 +4,13 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.BaseAdapter;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 public class GcmIntentService extends IntentService {
+	public static BaseAdapter adapter;
+
 	public GcmIntentService() {
 		super("GcmIntentService");
 	}
@@ -37,6 +40,9 @@ public class GcmIntentService extends IntentService {
 				} else {
 					Log.w("gcm", "Got unknown event type " + type + "!");
 				}
+				
+				if (adapter != null)
+					adapter.notifyDataSetChanged();
 			}
 		}
 		

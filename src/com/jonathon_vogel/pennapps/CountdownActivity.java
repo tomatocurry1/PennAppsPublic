@@ -1,7 +1,6 @@
 
 package com.jonathon_vogel.pennapps;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -9,8 +8,7 @@ import android.widget.TextView;
 
 import com.example.pennapps.R;
 
-public class CountdownActivity extends Activity {
-
+public class CountdownActivity extends HHActivity {
 	private TextView count;
 	final private long TIME = 10000;
 	final private long TICK = 1000;
