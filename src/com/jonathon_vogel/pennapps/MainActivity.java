@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -37,7 +36,7 @@ public class MainActivity extends Activity {
 	static final String SENDER_ID = "472922563262";
 	public static final String SERVER = "http://66.228.36.36:44207";
 
-	private Handler handler;
+	public static Handler handler;
 
 	GoogleCloudMessaging gcm;
 	String gcmRegistrationId;
@@ -45,6 +44,8 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		handler = new Handler();
 		setContentView(R.layout.activity_main);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -56,6 +57,7 @@ public class MainActivity extends Activity {
 		gcm = GoogleCloudMessaging.getInstance(this);
 		gcmRegistrationId = getRegId(this);
 		if (gcmRegistrationId.isEmpty()) {
+			Toast.makeText(this, "Waiting for Google Cloud Messaging Servers...", Toast.LENGTH_LONG).show();
 			Button create = (Button) findViewById(R.id.createGame);
 			Button join = (Button) findViewById(R.id.joinGame);
 			create.setEnabled(false);
@@ -81,17 +83,8 @@ public class MainActivity extends Activity {
 					req.setEntity(new UrlEncodedFormEntity(queries));
 					HttpResponse resp = http.execute(req);
 					if (resp.getEntity() != null) {
-						String content = IOUtils.toString(resp.getEntity().getContent());
+						//String content = IOUtils.toString(resp.getEntity().getContent());
 					}
-					handler.post(new Runnable() {
-						@Override
-						public void run() {
-							Button create = (Button) findViewById(R.id.createGame);
-							Button join = (Button) findViewById(R.id.joinGame);
-							create.setEnabled(true);
-							join.setEnabled(true);
-						}
-					});
 				} catch (IOException e) {
 					handler.post(new Runnable() {
 						@Override
@@ -147,12 +140,20 @@ public class MainActivity extends Activity {
 			protected Void doInBackground(Void... params) {
 				try {
 					gcmRegistrationId = gcm.register(SENDER_ID);
-					// TODO: send registration id to server
 					SharedPreferences prefs = getSharedPreferences(MainActivity.class.getSimpleName(), Context.MODE_PRIVATE);
 					SharedPreferences.Editor editor = prefs.edit();
 					editor.putString(PROPERTY_REG_ID, gcmRegistrationId);
 					editor.putInt(PROPERTY_APP_VERSION, APP_VERSION);
 					editor.commit();
+					handler.post(new Runnable() {
+						@Override
+						public void run() {
+							Button create = (Button) findViewById(R.id.createGame);
+							Button join = (Button) findViewById(R.id.joinGame);
+							create.setEnabled(true);
+							join.setEnabled(true);
+						}
+					});
 				} catch (IOException e) {
 					finish();
 				}

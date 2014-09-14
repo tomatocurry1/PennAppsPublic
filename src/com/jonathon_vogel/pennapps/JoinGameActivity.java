@@ -1,14 +1,11 @@
 package com.jonathon_vogel.pennapps;
 
-import com.example.pennapps.R;
-import com.example.pennapps.R.layout;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+
+import com.example.pennapps.R;
 
 public class JoinGameActivity extends Activity {
 
