@@ -31,13 +31,13 @@ public class LobbyActivity extends HHActivity {
 				name.setText(player.nickname);
 				if (player.isSelf) {
 					status.setText((player.ready ? "" : "Not ") + "Ready (tap to ready up)");
-					view.setOnClickListener(new OnClickListener(){
+					view.setOnClickListener(new OnClickListener() {
 						@Override
-						public void onClick(View v){
-							if (!player.isReady()){
+						public void onClick(View v) {
+							if (!player.isReady()) {
 								player.markReadyToServer(v);
-								status.setText("ready");
-							}							
+								status.setText("Ready");
+							}
 						}
 					});
 				} else {
@@ -47,8 +47,8 @@ public class LobbyActivity extends HHActivity {
 			}
 		};
 		super.setAdapter(adapter);
-		
-        ListView playerList = (ListView) findViewById(R.id.playerList);
-        playerList.setAdapter(adapter);
+
+		ListView playerList = (ListView) findViewById(R.id.playerList);
+		playerList.setAdapter(adapter);
 	}
 }

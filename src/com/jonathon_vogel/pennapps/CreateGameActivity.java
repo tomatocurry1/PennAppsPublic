@@ -1,6 +1,7 @@
 package com.jonathon_vogel.pennapps;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ public class CreateGameActivity extends HHActivity {
 		Button startGame = (Button) findViewById(R.id.startGame);
 		startGame.setEnabled(false);
 		
+		
 		TextView gameCode = (TextView) findViewById(R.id.bigCode);
 		gameCode.setText(gameID);
 		
@@ -55,5 +57,9 @@ public class CreateGameActivity extends HHActivity {
 
 		ListView playerList = (ListView) findViewById(R.id.playerList);
 		playerList.setAdapter(adapter);
+	}
+	
+	public void startGame(View v){
+		startActivity(new Intent(this, InGameActivity.class));
 	}
 }

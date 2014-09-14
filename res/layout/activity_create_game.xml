@@ -63,6 +63,7 @@
                 android:layout_height="fill_parent"
                 android:layout_margin="10dp"
                 android:text="Start Game"
+                android:onClick="startGame"
                 android:textSize="18sp" />
 
         </LinearLayout>

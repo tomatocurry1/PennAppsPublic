@@ -14,6 +14,7 @@
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
         android:text="Hide and Hunt"
+        android:id="@+id/identity"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/title_text"
         android:textSize="48sp" />
