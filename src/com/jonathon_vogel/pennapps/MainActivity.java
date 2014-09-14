@@ -39,13 +39,13 @@ public class MainActivity extends Activity {
 	public static Handler handler;
 
 	GoogleCloudMessaging gcm;
-	String gcmRegistrationId;
+	static String gcmRegistrationId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getActionBar().hide();
-		
+
 		handler = new Handler();
 		setContentView(R.layout.activity_main);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
