@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,22 +23,6 @@ public class LobbyActivity extends Activity {
 		setContentView(R.layout.activity_lobby);
 		
 		players = new ArrayList<PlayerInfo>();
-		
-		players.add(new PlayerInfo("Rotten194", true, true));
-		players.add(new PlayerInfo("bob_the_cookie", false));
-		players.add(new PlayerInfo("Dankesputz", true));
-		players.add(new PlayerInfo("Here_Comes_The_King", true));
-		players.add(new PlayerInfo("BasedGodLilB", false));
-		players.add(new PlayerInfo("Rotten194", true));
-		players.add(new PlayerInfo("bob_the_cookie", false));
-		players.add(new PlayerInfo("Dankesputz", true));
-		players.add(new PlayerInfo("Here_Comes_The_King", true));
-		players.add(new PlayerInfo("BasedGodLilB", false));
-		players.add(new PlayerInfo("Rotten194", true));
-		players.add(new PlayerInfo("bob_the_cookie", false));
-		players.add(new PlayerInfo("Dankesputz", true));
-		players.add(new PlayerInfo("Here_Comes_The_King", true));
-		players.add(new PlayerInfo("BasedGodLilB", false));
 		
 		adapter = new ArrayAdapter<PlayerInfo>(this, android.R.layout.simple_list_item_2, android.R.id.text1, players) {
 			@Override

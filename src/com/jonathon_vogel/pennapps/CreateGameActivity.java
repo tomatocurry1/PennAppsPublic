@@ -25,22 +25,6 @@ public class CreateGameActivity extends Activity {
 		
 		players = new ArrayList<PlayerInfo>();
 		
-		players.add(new PlayerInfo("Rotten194", true));
-		players.add(new PlayerInfo("bob_the_cookie", false));
-		players.add(new PlayerInfo("Dankesputz", true));
-		players.add(new PlayerInfo("Here_Comes_The_King", true));
-		players.add(new PlayerInfo("BasedGodLilB", false));
-		players.add(new PlayerInfo("Rotten194", true));
-		players.add(new PlayerInfo("bob_the_cookie", false));
-		players.add(new PlayerInfo("Dankesputz", true));
-		players.add(new PlayerInfo("Here_Comes_The_King", true));
-		players.add(new PlayerInfo("BasedGodLilB", false));
-		players.add(new PlayerInfo("Rotten194", true));
-		players.add(new PlayerInfo("bob_the_cookie", false));
-		players.add(new PlayerInfo("Dankesputz", true));
-		players.add(new PlayerInfo("Here_Comes_The_King", true));
-		players.add(new PlayerInfo("BasedGodLilB", false));
-		
 		adapter = new ArrayAdapter<PlayerInfo>(this, android.R.layout.simple_list_item_2, android.R.id.text1, players) {
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
