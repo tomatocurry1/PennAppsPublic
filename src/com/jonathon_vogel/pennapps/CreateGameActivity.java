@@ -1,15 +1,20 @@
 package com.jonathon_vogel.pennapps;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.pennapps.R;
 
 public class CreateGameActivity extends HHActivity {
+	public static Activity self;
+	
 	private ArrayAdapter<PlayerInfo> adapter;
 
 	@Override
@@ -17,7 +22,20 @@ public class CreateGameActivity extends HHActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_game);
 		getActionBar().hide();
+		self = this;
 
+		String gameID = getIntent().getStringExtra("game_id");
+		String nickname = getIntent().getStringExtra("nickname");
+		
+		Button startGame = (Button) findViewById(R.id.startGame);
+		startGame.setEnabled(false);
+		
+		TextView gameCode = (TextView) findViewById(R.id.bigCode);
+		gameCode.setText(gameID);
+		
+		PlayerInfo self = Game.getInstance().makeSelfPlayer(nickname);
+		self.setHunter(true);
+		
 		adapter = new ArrayAdapter<PlayerInfo>(this, android.R.layout.simple_list_item_2, android.R.id.text1, Game.getInstance().players) {
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {

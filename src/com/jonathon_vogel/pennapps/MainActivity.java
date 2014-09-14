@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -11,6 +12,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +22,7 @@ import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -92,8 +96,19 @@ public class MainActivity extends HHActivity {
 					queries.add(new BasicNameValuePair("reg_id", gcmRegistrationId));
 					req.setEntity(new UrlEncodedFormEntity(queries));
 					HttpResponse resp = http.execute(req);
-					if (resp.getEntity() != null) {
-						//String content = IOUtils.toString(resp.getEntity().getContent());
+					if (resp.getStatusLine().getStatusCode() != 200 || resp.getEntity() == null) {
+						throw new IOException("HTTP error! " + resp.getStatusLine().getStatusCode());
+					} else {
+						String content = IOUtils.toString(resp.getEntity().getContent());
+						Log.d("json", content);
+						JSONObject jobj = new JSONObject(content);
+						if (jobj.getString("status").equals("error")) {
+							throw new IOException("Got error from the server :( " + content);
+						}
+						Intent intent = new Intent(MainActivity.this, CreateGameActivity.class);
+						intent.putExtra("game_id", jobj.getString("game_id"));
+						intent.putExtra("nickname", jobj.getString("nickname"));
+						startActivity(intent);
 					}
 				} catch (IOException e) {
 					handler.post(new Runnable() {
@@ -102,12 +117,17 @@ public class MainActivity extends HHActivity {
 							Toast.makeText(MainActivity.this, "Couldn't reach server :(", Toast.LENGTH_LONG).show();
 						}
 					});
+				} catch (JSONException e) {
+					handler.post(new Runnable() {
+						@Override
+						public void run() {
+							Toast.makeText(MainActivity.this, "JSON was malformed", Toast.LENGTH_LONG).show();
+						}
+					});
 				}
 				return (Void) null;
 			}
 		};
-		Intent intent = new Intent(this, CreateGameActivity.class);
-		startActivity(intent);
 	}
 
 	public void joinGameClick(View v) {

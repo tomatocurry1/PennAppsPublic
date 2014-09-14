@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 
+import com.example.pennapps.R;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 public class GcmIntentService extends IntentService {
@@ -37,6 +39,13 @@ public class GcmIntentService extends IntentService {
 					Game.getInstance().gameStarted = true;
 				} else if (type.equals("player_tagged")) {
 					Game.getInstance().getPlayerById(extras.getString("reg_id")).hunter = true;
+				} else if (type.equals("all_players_ready")) {
+					MainActivity.handler.post(new Runnable() {
+						@Override
+						public void run() {
+							((Button) CreateGameActivity.self.findViewById(R.id.startGame)).setEnabled(true);
+						}
+					});
 				} else {
 					Log.w("gcm", "Got unknown event type " + type + "!");
 				}
