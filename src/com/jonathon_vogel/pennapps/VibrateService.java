@@ -36,9 +36,9 @@ public class VibrateService extends Service {
 			while (threadShouldRun) {
 				double dist = binder.getDistance();
 				if (dist == 0)
-					dist = 1.0;
+					dist = 0.0001;
 
-				if (dist <= MAXDIST) {
+				if (dist !=-1 && dist <= MAXDIST) {
 					vibrator.vibrate(500);
 					VibrateService.sleep((long) (MAXPAUSE * dist / MAXDIST));
 				} else {

@@ -33,9 +33,9 @@ public class CreateGameActivity extends HHActivity {
 				return view;
 			}
 		};
-		
+
 		super.setAdapter(adapter);
-		
+
 		ListView playerList = (ListView) findViewById(R.id.playerList);
 		playerList.setAdapter(adapter);
 	}
