@@ -379,13 +379,15 @@ containing a value of this type.
         public static final int white=0x7f05001e;
     }
     public static final class dimen {
-        /** 
+        /**  Default screen margins, per the Android Design guidelines. 
+
          Example customization of dimensions originally defined in res/values/dimens.xml
          (such as screen margins) for screens with more than 820dp of available width. This
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     
          */
         public static final int activity_horizontal_margin=0x7f090000;
+        public static final int activity_vertical_margin=0x7f090001;
     }
     public static final class drawable {
         public static final int common_signin_btn_icon_dark=0x7f020000;
@@ -421,48 +423,54 @@ containing a value of this type.
         public static final int powered_by_google_light=0x7f02001e;
     }
     public static final class id {
-        public static final int FrameLayout=0x7f07001a;
-        public static final int abilityButton=0x7f070018;
-        public static final int bigCode=0x7f070015;
+        public static final int FrameLayout=0x7f070014;
+        public static final int abilityButton=0x7f07001a;
+        public static final int action_settings=0x7f070021;
+        public static final int bigCode=0x7f070017;
         public static final int book_now=0x7f070010;
         public static final int buyButton=0x7f07000a;
         public static final int buy_now=0x7f07000f;
         public static final int buy_with_google=0x7f07000e;
         public static final int classic=0x7f070011;
-        public static final int codeNickname=0x7f07001b;
-        public static final int createGame=0x7f07001e;
+        public static final int codeNickname=0x7f07001c;
+        public static final int countdown=0x7f070015;
+        public static final int createGame=0x7f07001f;
         public static final int grayscale=0x7f070012;
         public static final int holo_dark=0x7f070005;
         public static final int holo_light=0x7f070006;
         public static final int hybrid=0x7f070004;
-        public static final int joinButton=0x7f07001d;
-        public static final int joinGame=0x7f07001f;
+        public static final int joinButton=0x7f07001e;
+        public static final int joinGame=0x7f070020;
         public static final int match_parent=0x7f07000c;
         public static final int monochrome=0x7f070013;
-        public static final int nicknameField=0x7f07001c;
+        public static final int nicknameField=0x7f07001d;
         public static final int none=0x7f070000;
         public static final int normal=0x7f070001;
-        public static final int playerList=0x7f070017;
-        public static final int playerListInGame=0x7f070019;
+        public static final int playerList=0x7f070019;
+        public static final int playerListInGame=0x7f07001b;
         public static final int production=0x7f070007;
         public static final int sandbox=0x7f070008;
         public static final int satellite=0x7f070002;
         public static final int selectionDetails=0x7f07000b;
-        public static final int startGame=0x7f070016;
+        public static final int startGame=0x7f070018;
         public static final int strict_sandbox=0x7f070009;
         public static final int terrain=0x7f070003;
-        public static final int textView1=0x7f070014;
+        public static final int textView1=0x7f070016;
         public static final int wrap_content=0x7f07000d;
     }
     public static final class integer {
         public static final int google_play_services_version=0x7f080000;
     }
     public static final class layout {
-        public static final int activity_create_game=0x7f030000;
-        public static final int activity_in_game=0x7f030001;
-        public static final int activity_join_game=0x7f030002;
-        public static final int activity_lobby=0x7f030003;
-        public static final int activity_main=0x7f030004;
+        public static final int activity_countdown=0x7f030000;
+        public static final int activity_create_game=0x7f030001;
+        public static final int activity_in_game=0x7f030002;
+        public static final int activity_join_game=0x7f030003;
+        public static final int activity_lobby=0x7f030004;
+        public static final int activity_main=0x7f030005;
+    }
+    public static final class menu {
+        public static final int countdown=0x7f0a0000;
     }
     public static final class string {
         public static final int action_settings=0x7f060020;
@@ -559,6 +567,7 @@ containing a value of this type.
         public static final int dummy_button=0x7f06001b;
         public static final int dummy_content=0x7f06001c;
         public static final int hello_world=0x7f06001e;
+        public static final int title_activity_countdown=0x7f060023;
         public static final int title_activity_create_game=0x7f06001d;
         public static final int title_activity_in_game=0x7f060022;
         public static final int title_activity_join_game=0x7f06001f;
