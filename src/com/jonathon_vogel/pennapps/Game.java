@@ -7,7 +7,9 @@ public class Game {
 	private static Game INSTANCE;
 	
 	public List<PlayerInfo> players;
+	public PlayerInfo self;
 	public boolean gameStarted;
+	public String gameID;
 	
 	private Game() {
 		players = new ArrayList<PlayerInfo>();
@@ -22,6 +24,12 @@ public class Game {
 		return null;
 	}
 	
+	public PlayerInfo makeSelfPlayer(String nick){
+		self = new PlayerInfo(MainActivity.gcmRegistrationId, nick, false, false);
+		players.add(self);
+		return self;
+	}
+	
 	public static void initialize() {
 		INSTANCE = new Game();
 	}
@@ -29,4 +37,6 @@ public class Game {
 	public static Game getInstance() {
 		return INSTANCE;
 	}
+	
+	
 }

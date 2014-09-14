@@ -34,8 +34,17 @@ public class MainActivity extends HHActivity {
 	static final int APP_VERSION = 0;
 	static final String SENDER_ID = "472922563262";
 	public static final String SERVER = "http://66.228.36.36:44207";
-
-	public static Handler handler;
+	
+	public class MainActivityHandler extends Handler {
+		public Context context;
+		
+		public MainActivityHandler() {
+			super();
+			this.context = MainActivity.this;
+		}
+	}
+	
+	public static MainActivityHandler handler;
 
 	GoogleCloudMessaging gcm;
 	static String gcmRegistrationId;
@@ -44,8 +53,9 @@ public class MainActivity extends HHActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getActionBar().hide();
-
-		handler = new Handler();
+		Game.initialize();
+		
+		handler = new MainActivityHandler();
 		setContentView(R.layout.activity_main);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 

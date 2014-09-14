@@ -38,6 +38,7 @@ public class JoinGameActivity extends HHActivity {
 	public void joinButtonClick(View view) {
 		final EditText gameCode = (EditText) findViewById(R.id.gameCode);
 		final EditText nickname = (EditText) findViewById(R.id.nickname);
+		Game.getInstance().gameID = gameCode.getText().toString();
 		new AsyncTask<Void, Void, Void>() {
 			@Override
 			protected Void doInBackground(Void... params) {
@@ -59,6 +60,7 @@ public class JoinGameActivity extends HHActivity {
 						MainActivity.handler.post(new Runnable() {
 							@Override
 							public void run() {
+								Game.getInstance().makeSelfPlayer(nickname.getText().toString());
 								Intent intent = new Intent(JoinGameActivity.this, LobbyActivity.class);
 								startActivity(intent);
 							}

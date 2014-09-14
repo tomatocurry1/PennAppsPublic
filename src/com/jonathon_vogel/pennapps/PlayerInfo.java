@@ -1,12 +1,28 @@
 package com.jonathon_vogel.pennapps;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
+
+import android.os.AsyncTask;
+import android.view.View;
+import android.widget.Toast;
+
 public class PlayerInfo {
 	String regID;
 	String nickname;
 	boolean hunter;
 	boolean ready;
 	boolean isSelf;
-	
+
 	public PlayerInfo(String regID, String nickname, boolean hunter, boolean ready) {
 		super();
 		this.regID = regID;
@@ -30,6 +46,37 @@ public class PlayerInfo {
 
 	public void setReady(boolean ready) {
 		this.ready = ready;
+	}
+
+	public void markReadyToServer(final View v) {
+		new AsyncTask<Void, Void, Void>() {
+			@Override
+			protected Void doInBackground(Void... params) {
+				try {
+					HttpClient http = HttpClients.createDefault();
+					HttpPost req = new HttpPost(MainActivity.SERVER + "/ready/" + Game.getInstance().gameID);
+					List<NameValuePair> queries = new ArrayList<NameValuePair>(1);
+					queries.add(new BasicNameValuePair("reg_id", MainActivity.gcmRegistrationId));
+					req.setEntity(new UrlEncodedFormEntity(queries));
+					HttpResponse resp = http.execute(req);
+					if (resp.getStatusLine().getStatusCode() != 200) {
+						throw new IOException("HTTP error");
+					} else {
+						v.setOnClickListener(null);
+						setReady(true);
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+					MainActivity.handler.post(new Runnable() {
+						@Override
+						public void run() {
+							Toast.makeText(MainActivity.handler.context, "Couldn't reach server :(", Toast.LENGTH_LONG).show();
+						}
+					});
+				}
+				return null;
+			}
+		};
 	}
 
 	public String getRegID() {
