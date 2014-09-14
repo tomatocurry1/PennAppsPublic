@@ -13,6 +13,8 @@ public abstract class HHActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		if (adapter != null)
+			adapter.notifyDataSetChanged();
 		GcmIntentService.adapter = adapter;
 	}
 }

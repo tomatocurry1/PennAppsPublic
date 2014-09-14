@@ -30,18 +30,22 @@ public class LobbyActivity extends HHActivity {
 
 				name.setText(player.nickname);
 				if (player.isSelf) {
-					status.setText((player.ready ? "" : "Not ") + "Ready (tap to ready up)");
+					if (player.ready) {
+						status.setText("Ready!");
+					} else {
+						status.setText("Not Ready :( (Tap your name)");
+					}
 					view.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
 							if (!player.isReady()) {
 								player.markReadyToServer(v);
-								status.setText("Ready");
+								status.setText("Ready!");
 							}
 						}
 					});
 				} else {
-					status.setText(player.ready ? "Not Ready" : "Ready");
+					status.setText(player.ready ? "Ready!" : "Not Ready...");
 				}
 				return view;
 			}

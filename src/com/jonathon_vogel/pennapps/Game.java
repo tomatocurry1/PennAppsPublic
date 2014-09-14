@@ -8,12 +8,10 @@ public class Game {
 	
 	public List<PlayerInfo> players;
 	public PlayerInfo self;
-	public boolean gameStarted;
 	public String gameID;
 	
 	private Game() {
 		players = new ArrayList<PlayerInfo>();
-		gameStarted = false;
 	}
 	
 	public PlayerInfo getPlayerById(String regID) {

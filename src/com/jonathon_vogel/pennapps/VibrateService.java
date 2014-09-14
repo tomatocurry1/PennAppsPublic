@@ -7,13 +7,15 @@ import android.os.IBinder;
 import android.os.Vibrator;
 
 public class VibrateService extends Service {
+	public static VibrateService staticInstance;
+	
 	final private double MAXDIST = 40.0;
 	final private double MAXPAUSE = 5000.0;
+	public double currentDistance = -1;
 
 	private VibrateThread thread;
 	private boolean threadShouldRun = true;
-	private final LocalBinder binder = new LocalBinder();
-	private static VibrateService staticInstance;
+
 
 	public VibrateService() {
 		super();
@@ -34,11 +36,11 @@ public class VibrateService extends Service {
 		@Override
 		public void run() {
 			while (threadShouldRun) {
-				double dist = binder.getDistance();
+				double dist = currentDistance;
 				if (dist == 0)
 					dist = 0.0001;
 
-				if (dist !=-1 && dist <= MAXDIST) {
+				if (dist >= 0 && dist < MAXDIST) {
 					vibrator.vibrate(500);
 					VibrateService.sleep((long) (MAXPAUSE * dist / MAXDIST));
 				} else {
@@ -60,6 +62,7 @@ public class VibrateService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		thread = new VibrateThread();
+		
 
 	}
 
@@ -78,6 +81,7 @@ public class VibrateService extends Service {
 
 	@Override
 	public IBinder onBind(Intent intent) {
-		return binder;
+		return null;
 	}
+
 }

@@ -11,5 +11,6 @@
     <string name="title_activity_lobby">LobbyActivity</string>
     <string name="title_activity_in_game">InGameActivity</string>
     <string name="title_activity_countdown">CountdownActivity</string>
+    <string name="title_activity_end_game">EndGameActivity</string>
 
 </resources>

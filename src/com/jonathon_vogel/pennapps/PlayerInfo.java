@@ -74,7 +74,7 @@ public class PlayerInfo {
 				}
 				return null;
 			}
-		};
+		}.execute();
 	}
 
 	public String getRegID() {

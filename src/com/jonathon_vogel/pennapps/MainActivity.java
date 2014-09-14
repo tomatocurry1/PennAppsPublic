@@ -79,6 +79,12 @@ public class MainActivity extends HHActivity {
 			registerInBackground();
 		}
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Game.getInstance().players.clear();
+	}
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
